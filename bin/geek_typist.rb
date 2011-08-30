@@ -5,10 +5,6 @@ require 'optparse'
 require "highline/system_extensions"
 include HighLine::SystemExtensions
 
-
-
-
-
 options = {}
 OptionParser.new do |opts|
 opts.banner = "Usage: geek_typist [options]"
@@ -40,7 +36,7 @@ else
 end
 
 failures = 0
-(str_test * n_times).split("").each do |s| 
+(str_test * n_times).split("").sort_by{ rand }.each do |s| 
 
   c = 0
   while (c != s[0]) do 
