@@ -2,6 +2,7 @@ require "rubygems"
 require 'optparse'
 require "highline/system_extensions"
 include HighLine::SystemExtensions
+require 'io/console'
 
 options = {}
 OptionParser.new do |opts|
@@ -58,7 +59,7 @@ chain.each do |s|
   c = 0
   while (compare_char(c,s[0])) do 
     puts s 
-    c = get_character 
+    c = STDIN.getch
     puts c.chr
     if (compare_char(c,s[0])) 
     puts "not good yet" 
