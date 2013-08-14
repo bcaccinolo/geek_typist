@@ -3,6 +3,7 @@ require 'optparse'
 require "highline/system_extensions"
 include HighLine::SystemExtensions
 require 'io/console'
+require 'geek_typist/version'
 
 options = {}
 OptionParser.new do |opts|
@@ -13,11 +14,11 @@ opts.on("-v", "--version", "Version") do |v|
 end
 
 opts.on("-t text", "--text text", "launch the system with the given text ") do |v|
-  options[:use_text] = v 
+  options[:use_text] = v
 end
 
 opts.on("-n NUM", "--n-times NUM", "repeat the text NUM times") do |v|
-  options[:repeat] = v 
+  options[:repeat] = v
 end
 
 opts.on("-r", "--randomize", "Randomize the content for more fun!") do |v|
@@ -26,10 +27,15 @@ end
 
 end.parse!
 
+if options[:version] == 1
+  puts GeekTypist::VERSION
+  exit
+end
+
 if options[:use_text]
   str_test = options[:use_text]
 else
-  str_test = "{13-_87}"
+  str_test = "{13-_87}" # default text to be used
 end
 
 if options[:repeat]
@@ -44,7 +50,7 @@ if options[:randomize]
 end
 
 def compare_char(c, s)
-  if Config::CONFIG["ruby_version"] =~ /^1\.9/
+  if RbConfig::CONFIG["ruby_version"] =~ /^1\.9/
     # "version ruby 1.9"
     return c.chr != s
   else
@@ -54,15 +60,17 @@ def compare_char(c, s)
 end
 
 failures = 0
-chain.each do |s| 
+chain.each do |s|
 
   c = 0
-  while (compare_char(c,s[0])) do 
-    puts s 
+  while (compare_char(c,s[0])) do
+    puts s
     c = STDIN.getch
+    exit if c == "\u0003"
+    exit if c == "\u0004"
     puts c.chr
-    if (compare_char(c,s[0])) 
-    puts "not good yet" 
+    if (compare_char(c,s[0]))
+    puts "not good yet"
     failures += 1
     end
   end
