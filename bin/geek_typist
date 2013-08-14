@@ -7,23 +7,36 @@ require 'geek_typist/version'
 
 options = {}
 OptionParser.new do |opts|
-opts.banner = "Usage: geek_typist [options]"
+  opts.banner = "Usage: geek_typist [options]"
 
-opts.on("-v", "--version", "Version") do |v|
-  options[:version] = 1
-end
+  opts.on("-v", "--version", "Version") do |v|
+    options[:version] = 1
+  end
 
-opts.on("-t text", "--text text", "launch the system with the given text ") do |v|
-  options[:use_text] = v
-end
+  opts.on("-t text", "--text text", "launch the system with the given text ") do |v|
+    options[:use_text] = v
+  end
 
-opts.on("-n NUM", "--n-times NUM", "repeat the text NUM times") do |v|
-  options[:repeat] = v
-end
+  opts.on("-n NUM", "--n-times NUM", "repeat the text NUM times") do |v|
+    options[:repeat] = v
+  end
 
-opts.on("-r", "--randomize", "Randomize the content for more fun!") do |v|
-  options[:randomize] = 1
-end
+  opts.on("-r", "--randomize", "Randomize the content for more fun!") do |v|
+    options[:randomize] = 1
+  end
+
+opts.separator <<-FILTERING
+
+  **** Examples ****
+
+  geek_typist -r -n3  -t '#(t)%(b)&(p){p}%{u}{y}'
+  geek_typist -t '{#}-@{#}=|' -n 3
+  geek_typist -t '#(&)^@(%)$' -n3
+  geek_typist -t '\#{t}-@{v=}-\#{p!}-|{r=}' -n 3
+  geek_typist -t '&^%$0)(-2)0^\#{b}' -n 3
+  geek_typist -t '\#{t}-%(t)=${t}-@(v)-\#{p!}' -n 3
+
+FILTERING
 
 end.parse!
 
